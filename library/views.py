@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
+from library.models import Book,Author
 from library.serializer import BookSerializer, AuthorSerializer
 
 
@@ -32,4 +34,31 @@ def create_author(request):
 
 
 # TODO: GET BOOK BY ID and return json response..
+
+@api_view(['GET'])
+def get_book_by_id(request):
+    book_id = request.query_params.get('book_id')
+
+    # If no book_id is provided, return bad request
+    if not book_id:
+        return Response({"error": "book_id is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    book=get_object_or_404(Book,id=book_id)
+    book_serializer = BookSerializer(book)
+
+    return Response(book_serializer.data, status=status.HTTP_200_OK)
+
 # TODO: GET AUTHOR BY ID and return json response..
+
+
+@api_view(['GET'])
+def get_author_by_id(request):
+    author_id = request.query_params.get('author_id')
+
+    # If no book_id is provided, return bad request
+    if not author_id:
+        return Response({"error": "author_id is required"}, status=status.HTTP_400_BAD_REQUEST)
+    book = get_object_or_404(Author, id=author_id)
+    author_serializer =AuthorSerializer(book)
+
+    return Response(author_serializer.data, status=status.HTTP_200_OK)
