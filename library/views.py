@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from .models import Book,Author
 from library.serializer import BookSerializer, AuthorSerializer
+from rest_framework.exceptions import NotFound
 
 
 # Create your views here.
@@ -32,4 +33,24 @@ def create_author(request):
 
 
 # TODO: GET BOOK BY ID and return json response..
+@api_view(['GET'])
+def get_book_by_id(request,id):
+    try:
+        instance = Book.objects.get(pk=id)
+    except Book.DoesNotExist:
+        raise NotFound(f"No record found with ID {id}")
+
+    serializer = BookSerializer(instance)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 # TODO: GET AUTHOR BY ID and return json response..
+@api_view(['GET'])
+def get_author_by_id(request,id):
+    try:
+        instance = Author.objects.get(pk=id)
+    except Author.DoesNotExist:
+        raise NotFound(f"No record found with ID {id}")
+
+    serializer = AuthorSerializer(instance)
+    return Response(serializer.data, status=status.HTTP_200_OK)
