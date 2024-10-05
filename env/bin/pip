@@ -1,4 +1,6 @@
-#!/Users/karan.bhatia/Desktop/personal/helloworld/env/bin/python3.12
+#!/bin/sh
+'''exec' "/Users/dbaweja/Documents/Education/Scaler Academy/LLD/demoDjangoProject/env/bin/python3.12" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
