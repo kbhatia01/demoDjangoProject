@@ -8,3 +8,6 @@ def hello_world(request, name):
 
 def bye(request):
     return HttpResponse("Good Bye!")
+
+def whatismyname(request):
+    return HttpResponse("I dont know")
