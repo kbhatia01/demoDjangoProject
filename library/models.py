@@ -1,6 +1,5 @@
+from django.utils import timezone
 from django.db import models
-
-
 # Create your models here.
 
 class Author(models.Model):
@@ -10,3 +9,4 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     authors = models.ForeignKey(Author, on_delete=models.CASCADE)
+    publish_date = models.DateField(default=timezone.now)
